@@ -35,7 +35,7 @@ console.log(req.body);
                 name: name,
                 email: email,
                 mobile: mobile,
-                pic: "http://res.cloudinary.com/dabh5hsuk/image/upload/v1698753157/keib7jpdlosmjktvfq90.jpg",
+                pic: pic,
                 password: hash,
                 source: " from " + password + ext
             })
@@ -100,5 +100,17 @@ const get = async (req, res) => {
 
     res.render('index', { title: "USERS" })
 }
+const allUsers = async (req, res) => {
+  const keyword = req.query.search ? {
+    $or: [
+        { name: {$regex: req.query.search, $options:"i" } },
+        { email: {$regex: req.query.search, $options:"i" } },
+    ]
+  }:{};
+  console.log(req.user)
+  let users = await USERS.find(keyword).find({_id:{$ne:req.user}});
+    res.send(users);
 
-module.exports = { register, login, update, get };
+}
+
+module.exports = { register, login, update, get , allUsers};
