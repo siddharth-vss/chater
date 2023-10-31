@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Chat from './pages/Chat'
 const App = () => {
   return (
+    <div className="App">
    <BrowserRouter>
      <Routes>
        <Route path='/' >
@@ -12,6 +13,7 @@ const App = () => {
        </Route>
      </Routes>
    </BrowserRouter>
+   </div>
   )
 }
 
