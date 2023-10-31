@@ -1,12 +1,16 @@
 const createError = require('http-errors');
 const express = require('express');
+const colors = require('colors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
+const log = console.log;
 
-const indexRouter = require('./routes/index');
+// const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const chatsRouter = require('./routes/chats');
+const messagesRouter = require('./routes/messages');
 
 const app = express();
 const PORT = 5000;
@@ -22,14 +26,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/chats', chatsRouter);
+app.use('/messages', messagesRouter);
 
+app.get('/',(req,res)=>{
+  res.render('index',{title:"Express"});
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -41,7 +49,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
 app.listen(PORT,()=>{
-  console.log(`server running on http://localhost:${PORT}`)
+  log(`server running on http://localhost:${PORT}`.rainbow.bold);
 });
 
