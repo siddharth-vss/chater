@@ -41,7 +41,7 @@ console.log(req.body);
             })
             let id = user._id;
             let token = jwt.sign({ id }, process.env.SECREATE);
-            res.status(200).json({ token });
+            res.status(200).json({user : token});
         }
     } catch (err) {
         console.log("error =>", err);
@@ -55,7 +55,7 @@ const login = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
+  console.log(req.body)
     const { email, password } = req.body;
 
 
@@ -75,7 +75,7 @@ const login = async (req, res) => {
 
 
         if (compare) {
-            res.json({ authtoken });
+            res.json( {user : authtoken} );
 
         }
         else {

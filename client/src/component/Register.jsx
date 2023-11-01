@@ -1,11 +1,16 @@
 import React, {  useState } from 'react'
 import  { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
-import axios from 'axios'
+
 // import { useGoogleLogin } from '@react-oauth/google';
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
+import { useAppContext } from '../context/appContext';
+
+
 
 const Register = () => {
+
+  const { registerUser  } = useAppContext();
   const [show, setShow] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -117,15 +122,9 @@ const Register = () => {
     return;
    }
 
-  try {
-     const config = {
-      headers :{
-        'Content-Type':'application/json'
-      },
-    };
-    const {data} = await axios.post("http://localhost:5000/users",{
-      name, email, password, pic ,mobile
-    },config);
+   try{
+     registerUser( name, email, password, pic ,mobile);
+    
     toast({
       title: `Account created.`,
       status: "success",
@@ -133,7 +132,7 @@ const Register = () => {
       duration:5000,
       isClosable: true,
     })
-    localStorage.setItem("userInfo",JSON.stringify(data));
+    
     setLoading(false);
     navigate('/chats');
      

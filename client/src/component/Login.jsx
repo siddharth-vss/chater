@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import  { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
-import axios from 'axios'
+import { useAppContext } from '../context/appContext';
+
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
 const Login = () => {
+  const { loginUser } = useAppContext();
  const [show,setShow]= useState(false);
  const [email,setEmail]= useState('');
  const [password,setPassword]= useState('');
@@ -12,14 +14,9 @@ const Login = () => {
  const toast = useToast()
  const postDetails = async() =>{
   try {
-    const config = {
-     headers :{
-       'Content-Type':'application/json'
-     },
-   };
-   const {data} = await axios.post("http://localhost:5000/users/login",{
-     email:"testuser@test.com", password:"testuser"
-   },config);
+    
+     loginUser({email:"testuser@test.com", password:"testuser"})
+   
    toast({
      title: `Singed in Successfully.`,
      status: "success",
@@ -27,7 +24,6 @@ const Login = () => {
      duration:5000,
      isClosable: true,
    })
-   localStorage.setItem("userInfo",JSON.stringify(data));
    setLoading(false);
    navigate('/chats');
     
@@ -56,14 +52,7 @@ const Login = () => {
    }
    
   try {
-     const config = {
-      headers :{
-        'Content-Type':'application/json'
-      },
-    };
-    const {data} = await axios.post("http://localhost:5000/users/login",{
-      email, password
-    },config);
+     loginUser({email, password})
     toast({
       title: `Singed in Successfully.`,
       status: "success",
@@ -71,7 +60,6 @@ const Login = () => {
       duration:5000,
       isClosable: true,
     })
-    localStorage.setItem("userInfo",JSON.stringify(data));
     setLoading(false);
     navigate('/chats');
      
