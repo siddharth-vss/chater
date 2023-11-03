@@ -1,9 +1,9 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Text } from "@chakra-ui/layout";
-// import { ChatState } from "../../Context/ChatProvider";
+// import { useAppContext } from "../../context/appContext";
 
 const UserListItem = ({user ,handleFunction }) => {
-  // const { user } = ChatState();
+  // const { user } = useAppContext();
 
   return (
     <Box

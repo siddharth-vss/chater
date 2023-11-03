@@ -1,8 +1,8 @@
-// import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios";
-import { useEffect
+import { 
+  useEffect
   , useState 
 } from "react";
 import { getSender } from "../../config/ChatLogics";
@@ -14,20 +14,16 @@ import { useAppContext } from "../../context/appContext";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = useAppContext();
+  const { selectedChat,sp, setSelectedChat,  chats, setChats } = useAppContext();
 
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
+    
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+      
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await sp.get("/chats");
       setChats(data);
     } catch (error) {
       toast({
@@ -42,13 +38,16 @@ const MyChats = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    setLoggedUser(localStorage.getItem("id"));
     fetchChats();
     // eslint-disable-next-line
   }, [fetchAgain]);
 
   return (
     <Box
+   
+     
+      
       d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
@@ -69,11 +68,11 @@ const MyChats = ({ fetchAgain }) => {
         alignItems="center"
       >
         My Chats
-        <GroupChatModal> 
+         <GroupChatModal> 
           <Button
             d="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            // rightIcon={<AddIcon />}
+            rightIcon={<AddIcon />}
           >
             New Group Chat
           </Button>
@@ -85,7 +84,7 @@ const MyChats = ({ fetchAgain }) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="100%"
+        h="90%"
         borderRadius="lg"
         overflowY="hidden"
       >
@@ -107,12 +106,13 @@ const MyChats = ({ fetchAgain }) => {
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
-                {chat.latestMessage && (
+                         {chat.latestMessage && (
                   <Text fontSize="xs">
                     <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
+                                        {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content}
+                
                   </Text>
                 )}
               </Box>

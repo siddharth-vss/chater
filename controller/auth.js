@@ -44,6 +44,7 @@ console.log(req.body);
             res.status(201).json({
                 name,
                 email,
+                _id,
                 password,
                 pic,
                 token

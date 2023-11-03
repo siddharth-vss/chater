@@ -22,14 +22,14 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+
 import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "./ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
-import NotificationBadge from "react-notification-badge";
-import { Effect } from "react-notification-badge";
-import { getSender } from "../../config/ChatLogics";
+// import NotificationBadge from "react-notification-badge";
+// import { Effect } from "react-notification-badge";
+// import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { useAppContext } from "../../context/appContext";
 
@@ -41,13 +41,14 @@ function SideDrawer() {
 
   const {
     setSelectedChat,
-    user,
+    // user,
     name,
     pic,
     email,
-    notification,
-    setNotification,
+    // notification,
+    // setNotification,
     chats,
+    sp,
     setChats,
   } = useAppContext();
 
@@ -75,13 +76,8 @@ function SideDrawer() {
     try {
       setLoading(true);
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user}`,
-        },
-      };
-
-      const { data } = await axios.get(`http://localhost:5000/users?search=${search}`, config);
+      
+      const { data } = await sp.get(`/users?search=${search}`);
 
       setLoading(false);
       setSearchResult(data);
@@ -103,13 +99,8 @@ function SideDrawer() {
 
     try {
       setLoadingChat(true);
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`http://localhost:5000/chats`, { userId }, config);
+      
+      const { data } = await sp.post(`/chats`, { userId });
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -156,13 +147,13 @@ function SideDrawer() {
           <Menu>
             <MenuButton p={1}>
 
-              <NotificationBadge 
+              {/* <NotificationBadge 
                 count={notification.length}
-                effect={Effect.SCALE}              />
+                effect={Effect.SCALE}              /> */}
 
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-              <MenuList pl={2}>
+              {/* <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -177,7 +168,7 @@ function SideDrawer() {
                     : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
             ))} 
-            </MenuList>
+            </MenuList> */}
           </Menu>
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>

@@ -12,19 +12,18 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
-  SETUP_USER_BEGIN,
-  SETUP_USER_ERROR,
-  SETUP_USER_SUCCESS,
 
   LOGOUT_USER,
 
 
 } from './actions'
 import axios from 'axios';
+import { useState } from 'react';
 
 
 
 const user = localStorage.getItem('userInfo');
+const _id = localStorage.getItem('id');
 
 const name = localStorage.getItem('name');
 const pic = localStorage.getItem('pic');
@@ -41,7 +40,7 @@ export const initialState = {
   alertText: '',
   alertType: '',
   user: user,
-
+  id:_id, 
   name:name ,
   pic:pic ,
   email:email ,
@@ -55,7 +54,10 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-
+  const [selectedChat, setSelectedChat] = useState();
+ 
+  const [notification, setNotification] = useState([]);
+  const [chats, setChats] = useState();
 
   const sp = axios.create({
     baseURL: 'http://localhost:5000',
@@ -95,28 +97,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const setupUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN });
-    try {
-      const { data } = await sp.post(`/${endPoint}`, currentUser);
-
-      const { user } = data;
-      dispatch({
-        type: SETUP_USER_SUCCESS,
-        payload: { user, alertText },
-      });
-      addUserToLocalStorage({ user });
-    } catch (error) {
-      dispatch({
-        type: SETUP_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
-    }
-    clearAlert();
-  };
-
-
-
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({
@@ -125,9 +105,11 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ email, name, pic, token }) => {
+  const addUserToLocalStorage = ({ email, name, pic, token ,_id }) => {
     localStorage.setItem('userInfo', token);
     localStorage.setItem('name', name);
+    localStorage.setItem('id', _id);
+
     localStorage.setItem('pic', pic);
     localStorage.setItem('email', email);
 
@@ -137,6 +119,7 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('name');
     localStorage.removeItem('pic');
+    localStorage.removeItem('id');
     localStorage.removeItem('email');
 
   };
@@ -146,17 +129,17 @@ const AppProvider = ({ children }) => {
     try {
       const response = await sp.post('/users', currentUser);
       console.log(response.data);
-      const { email, name, pic, token } = response.data;
+      const { email, name, pic, token,_id } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
         payload: {
-          email, name, pic, token
+          email, name, pic, token,_id
 
         },
       });
 
       addUserToLocalStorage({
-        email, name, pic, token
+        email, name, pic, token,_id
 
       })
     } catch (error) {
@@ -175,17 +158,17 @@ const AppProvider = ({ children }) => {
     try {
       const response = await sp.post('/users/login', currentUser);
       console.log(response.data);
-      const { email, name, pic, token } = response.data;
-      console.log(email, name, pic, token)
+      const { email, name, pic, token ,_id } = response.data;
+      console.log(email, name, pic, token, _id)
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: {
-          email, name, pic, token
+          email, name, pic, token , _id
 
         }
       });
       addUserToLocalStorage({
-        email, name, pic, token
+        email, name, pic, token ,_id
 
       })
     } catch (error) {
@@ -213,8 +196,14 @@ const AppProvider = ({ children }) => {
         registerUser,
         loginUser,
         removeUserFromLocalStorage,
-        setupUser,
         logoutUser,
+        selectedChat,
+        setSelectedChat,
+        notification,
+        setNotification,
+        chats,
+        setChats,
+        sp,
 
 
       }}

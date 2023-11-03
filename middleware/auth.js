@@ -20,7 +20,7 @@ const auth = async (req, res, next) => {
     // attach the user request object
     console.log(payload);
     req.user = payload.id;
-    console.log(req.user);
+    // console.log(req.user);
     // req.user = { userId: payload.userId };
     next();
   } catch (error) {

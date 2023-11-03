@@ -14,7 +14,7 @@ const accessChat = async (req, res) => {
 
 
     const { userId } = req.body;
-
+    console.log(userId , req.body);
     if (!userId) {
         console.log("UserId param not sent with request");
         return res.sendStatus(400);
@@ -58,7 +58,7 @@ const accessChat = async (req, res) => {
 }
 const fetchChat = async (req, res) => {
     try {
-        CHAT.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        CHAT.find({ users: { $elemMatch: { $eq: req.user } } })
           .populate("users", "-password")
           .populate("groupAdmin", "-password")
           .populate("latestMessage")
