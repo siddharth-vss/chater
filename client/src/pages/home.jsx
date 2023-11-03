@@ -2,9 +2,10 @@ import React from 'react'
 import '../index.css'
 import Login from '../component/Login'
 import Register from '../component/Register'
+import { Navigate } from 'react-router-dom';
+import { useAppContext } from '../context/appContext';
+
 import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
-// import { useNavigate } from 'react-router-dom'
-// import {useAppContext} from '../context/appContext'
 const Home = () => {
   // const navigate = useNavigate();
  
@@ -15,7 +16,11 @@ const Home = () => {
   //           navigate('/chats');
   //       }
   //   }, [ navigate ])
-  return (
+
+  const { user } = useAppContext();
+  if (user) {
+    return <Navigate to='/chats' />;
+  }else  return  (
     <Container  maxW='xl' centerContent >
      <Box 
       d="flex"

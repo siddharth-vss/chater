@@ -41,7 +41,13 @@ console.log(req.body);
             })
             let id = user._id;
             let token = jwt.sign({ id }, process.env.SECREATE);
-            res.status(200).json({user : token});
+            res.status(201).json({
+                name,
+                email,
+                password,
+                pic,
+                token
+              });
         }
     } catch (err) {
         console.log("error =>", err);
@@ -63,7 +69,7 @@ const login = async (req, res) => {
 
         let user = await USERS.findOne({ email });
         let id = user._id;
-        let authtoken = await jwt.sign({ id }, process.env.SECREATE, { expiresIn: '1d' });
+        let token = await jwt.sign({ id }, process.env.SECREATE, { expiresIn: '1d' });
 
         if (!user) {
 
@@ -75,7 +81,14 @@ const login = async (req, res) => {
 
 
         if (compare) {
-            res.json( {user : authtoken} );
+            res.status(201).json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                pic: user.pic,
+                token: token,
+              } );
 
         }
         else {
@@ -110,6 +123,7 @@ const allUsers = async (req, res) => {
   console.log(req.user)
   let users = await USERS.find(keyword).find({_id:{$ne:req.user}});
     res.send(users);
+    console.log(users);
 
 }
 

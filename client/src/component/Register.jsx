@@ -123,8 +123,8 @@ const Register = () => {
    }
 
    try{
-     registerUser( name, email, password, pic ,mobile);
-    
+     registerUser( {name, email, password, pic ,mobile});
+     console.log( name, email, password, pic ,mobile);
     toast({
       title: `Account created.`,
       status: "success",
