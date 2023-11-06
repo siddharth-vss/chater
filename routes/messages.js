@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 
-const MASSEGES = require('../models/messageModel');
+const { getMessages ,sendMessages} = require('../controller/messages');
+const {auth} = require('../middleware/auth');
+// const MASSEGES = require('../models/messageModel');
+// const USER = require('../models/user');
 
 /* GET home page. */
-router.get('/', async(req, res) => {
-  let userId = await MASSEGES.find({}) ;
-  res.send(userId);
-});
-
+router.route('/').post(auth,sendMessages)
+router.route('/:chatId').get(auth,getMessages);
 
 
 module.exports = router;

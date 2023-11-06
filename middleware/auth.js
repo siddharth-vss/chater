@@ -1,6 +1,5 @@
 const cookieParser = require('cookie-parser');
 const  jwt = require('jsonwebtoken');
-const USER = require('../models/user');
 
 
 
@@ -18,7 +17,7 @@ const auth = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.SECREATE);
     // console.log(payload)
     // attach the user request object
-    console.log(payload);
+
     req.user = payload.id;
     // console.log(req.user);
     // req.user = { userId: payload.userId };

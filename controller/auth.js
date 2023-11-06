@@ -27,7 +27,7 @@ console.log(req.body);
     let hash = await bcrypt.hash(password, salt);
     try {
         if (user) {
-            res.send('ERROR');
+            res.status(400).json("Invalid data passed into request");
         }
 
         if (!user) {
@@ -74,7 +74,7 @@ const login = async (req, res) => {
 
         if (!user) {
 
-            success = false
+         
             return res.status(400).json({ error: "Please try to login with correct credentials" });
         }
         let compare = await bcrypt.compare(password, user.password);
@@ -93,7 +93,7 @@ const login = async (req, res) => {
 
         }
         else {
-            success = false
+        
             return res.status(400).json({ success, error: "Please try to login with correct credentials" });
         }
 

@@ -13,11 +13,13 @@ import { useAppContext } from "../../context/appContext";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
+  
 
-  const { selectedChat,sp, setSelectedChat,  chats, setChats } = useAppContext();
+
+  const { selectedChat,sp,windowSize, setSelectedChat,  chats, setChats } = useAppContext();
 
   const toast = useToast();
-
+  const width = windowSize.width;
   const fetchChats = async () => {
     
     try {
@@ -46,9 +48,11 @@ const MyChats = ({ fetchAgain }) => {
   return (
     <Box
    
-     
+    style={{
+      display:`${(width < 768 &&selectedChat) ? "none" : "flex"}`
+    }}
       
-      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      // d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}

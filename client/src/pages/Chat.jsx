@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/react';
 import SideDrawer from '../component/miscellaneous/SideDrawer';
 import MyChats from '../component/miscellaneous/MyChats';
 import ChatBox from '../component/miscellaneous/ChatBox';
-import { Flex } from '@chakra-ui/react'
+// import { Flex } from '@chakra-ui/react'
 
 const Chat = () => {
   
@@ -13,7 +13,7 @@ const Chat = () => {
 
 
   return (
-    <div style={{width:"100%" , }}>
+    <div style={{width:"100%" }}>
       {user && <SideDrawer/>}
          <Box 
          style={{

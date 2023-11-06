@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import reducer from './reducer';
 import {
   DISPLAY_ALERT,
@@ -58,6 +58,27 @@ const AppProvider = ({ children }) => {
  
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
+
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   const sp = axios.create({
     baseURL: 'http://localhost:5000',
@@ -204,6 +225,7 @@ const AppProvider = ({ children }) => {
         chats,
         setChats,
         sp,
+        windowSize,
 
 
       }}

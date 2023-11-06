@@ -4,13 +4,14 @@ import SingleChat from "./SingleChat";
 import { useAppContext } from "../../context/appContext";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
-  const { selectedChat } = useAppContext();
-
+  const { selectedChat ,windowSize } = useAppContext();
+  const width = windowSize.width;
   return (
     <Box
     style={{
-      display:`${selectedChat ? "flex" : "none"}`
+      display:`${((width < 768 )&& (!selectedChat)) ? "none" : "flex"}`
     }}
+    id="chatbox"
       
       alignItems="center"
       flexDir="column"

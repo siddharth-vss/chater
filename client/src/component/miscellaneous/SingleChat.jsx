@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./ProfileModal";
-// import ScrollableChat from "./ScrollableChat";
+import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
-// import animationData from "../animations/typing.json";
+import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
-// import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
+import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import {useAppContext } from "../../context/appContext"
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
@@ -30,14 +30,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    // animationData: animationData,
+    animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat, sp,setSelectedChat, user, notification, setNotification } =
+  const { selectedChat, sp,setSelectedChat, user,id, notification, setNotification } =
     useAppContext();
 
+   
   const fetchMessages = async () => {
     if (!selectedChat) return;
 
@@ -95,20 +96,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit("setup", user);
+    socket.emit("setup", id);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
+  
 
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     fetchMessages();
-
+    
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
-  }, [selectedChat]);
+  }, [selectedChat,istyping]);
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
@@ -181,11 +183,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <>
                   {selectedChat.chatName.toUpperCase()}
-                  {/* <UpdateGroupChatModal
+                  <UpdateGroupChatModal
                     fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
                     setFetchAgain={setFetchAgain}
-                  /> */}
+                  />
                 </>
               ))}
           </Text>
@@ -209,8 +211,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages">ggg
-                {/* <ScrollableChat messages={messages} /> */}
+              <div className="messages">
+                <ScrollableChat messages={messages} />
               </div>
             )}
 
