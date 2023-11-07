@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "server":"nodemon app.js",
-    "build":"npm install && npm install --prefix client --force && npm run build --prefix client "
+    "build":"npm install --legacy-peer-deps && npm install --prefix client --force && npm run build --prefix client "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
