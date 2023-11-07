@@ -32,6 +32,7 @@ const ProfileModal = ({ user, children }) => {
             fontFamily="Work sans"
             d="flex"
             justifyContent="center"
+            style={{position:"relative",left:"calc(50% - 156px)"}}
           >
             {user.name}
           </ModalHeader>
@@ -43,14 +44,16 @@ const ProfileModal = ({ user, children }) => {
             justifyContent="space-between"
           >
             <Image
+             style={{position:"relative",left:"calc(50% - 100px)"}}
               borderRadius="full"
-              boxSize="150px"
+              boxSize="200px"
               src={user.pic}
               alt={user.name}
             />
             <Text
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
+              style={{position:"relative",left:"calc(50% - 156px)"}}
             >
               Email: {user.email}
             </Text>

@@ -78,12 +78,12 @@ const Register = () => {
     }).then((res)=> res.json())
     .then( Data =>{ 
       setPic(Data.url.toString());
-      console.log(Data.url.toString());
+     
       setLoading(false);
     })
     .catch((err) =>{
       setLoading(false);
-      console.error('Error:'+ err);
+      
     })
 
   }else{
@@ -124,7 +124,7 @@ const Register = () => {
 
    try{
      registerUser( {name, email, password, pic ,mobile});
-     console.log( name, email, password, pic ,mobile);
+
     toast({
       title: `Account created.`,
       status: "success",
@@ -238,7 +238,7 @@ const Register = () => {
             <br />
             {profile ? (
                 <div>
-                    {console.log(profile)}
+                    
                     <img src={profile.picture} alt="userimage" />
                     <h3>User Logged in</h3>
                     <p>Name: {profile.name}</p>

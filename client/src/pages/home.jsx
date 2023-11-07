@@ -11,7 +11,7 @@ const Home = () => {
  
   //   useEffect(() => {
   //       let user = localStorage.getItem("userInfo");
-  //         console.log(user)
+  //         
   //         if(user){
   //           navigate('/chats');
   //       }

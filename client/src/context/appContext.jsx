@@ -40,10 +40,10 @@ export const initialState = {
   alertText: '',
   alertType: '',
   user: user,
-  id:_id, 
-  name:name ,
-  pic:pic ,
-  email:email ,
+  id: _id,
+  name: name,
+  pic: pic,
+  email: email,
 };
 
 
@@ -55,7 +55,7 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const [selectedChat, setSelectedChat] = useState();
- 
+
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
@@ -102,7 +102,6 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      // console.log(error.response);
       if (error.response.status === 401) {
         logoutUser();
       }
@@ -126,7 +125,7 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ email, name, pic, token ,_id }) => {
+  const addUserToLocalStorage = ({ email, name, pic, token, _id }) => {
     localStorage.setItem('userInfo', token);
     localStorage.setItem('name', name);
     localStorage.setItem('id', _id);
@@ -149,18 +148,17 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const response = await sp.post('/users', currentUser);
-      console.log(response.data);
-      const { email, name, pic, token,_id } = response.data;
+      const { email, name, pic, token, _id } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
         payload: {
-          email, name, pic, token,_id
+          email, name, pic, token, _id
 
         },
       });
 
       addUserToLocalStorage({
-        email, name, pic, token,_id
+        email, name, pic, token, _id
 
       })
     } catch (error) {
@@ -174,22 +172,21 @@ const AppProvider = ({ children }) => {
   };
 
   const loginUser = async (currentUser) => {
-    console.log(currentUser)
+
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const response = await sp.post('/users/login', currentUser);
-      console.log(response.data);
-      const { email, name, pic, token ,_id } = response.data;
-      console.log(email, name, pic, token, _id)
+
+      const { email, name, pic, token, _id } = response.data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: {
-          email, name, pic, token , _id
+          email, name, pic, token, _id
 
         }
       });
       addUserToLocalStorage({
-        email, name, pic, token ,_id
+        email, name, pic, token, _id
 
       })
     } catch (error) {

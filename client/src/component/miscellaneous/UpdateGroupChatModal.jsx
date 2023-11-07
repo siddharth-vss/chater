@@ -42,7 +42,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       setLoading(true);
       
       const { data } = await sp.get(`/users?search=${search}`);
-      console.log(data);
+    
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -71,8 +71,6 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           chatName: groupChatName,
         }
       );
-
-      console.log(data._id);
       // setSelectedChat("");
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);

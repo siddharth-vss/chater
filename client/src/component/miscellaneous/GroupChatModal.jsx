@@ -54,7 +54,7 @@ import {
         setLoading(true);
         
         const { data } = await sp.get(`/users?search=${search}`);
-        console.log(data);
+        
         setLoading(false);
         setSearchResult(data);
       } catch (error) {

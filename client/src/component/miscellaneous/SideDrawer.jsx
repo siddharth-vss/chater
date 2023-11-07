@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
-import { Flex, Spacer } from '@chakra-ui/react'
+
 import {
   Menu,
   MenuButton,
@@ -42,11 +42,13 @@ function SideDrawer() {
   const {
     setSelectedChat,
     // user,
+    id,
     name,
+    windowSize,
     pic,
     email,
-    // notification,
-    // setNotification,
+    notification,
+    setNotification,
     chats,
     sp,
     setChats,
@@ -55,6 +57,7 @@ function SideDrawer() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  const width = windowSize.width;
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -81,7 +84,7 @@ function SideDrawer() {
 
       setLoading(false);
       setSearchResult(data);
-      console.log(data);
+     
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -95,7 +98,7 @@ function SideDrawer() {
   };
 
   const accessChat = async (userId) => {
-    console.log(userId);
+    
 
     try {
       setLoadingChat(true);
@@ -122,6 +125,7 @@ function SideDrawer() {
     <>
       <Box
         d="flex"
+        style={{display:"flex", alignItems:"center",justifyContent:"space-around"}}
         justifyContent="space-between"
         alignItems="center"
         bg="white"
@@ -129,31 +133,31 @@ function SideDrawer() {
         p="5px 10px 5px 10px"
         borderWidth="5px"
       >
-        <Flex>
+        
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text d={{ base: "none", md: "flex" }} px={4}>
+            <Text style={{display: width<445 ? "none":"block"}} d={{ base: "none", md: "flex" }} px={4}>
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Spacer />
+        
         <Text fontSize="2xl" fontFamily="Work sans">
           Talk-A-Tive
         </Text>
-        <Spacer />
-        <div>
+        
+        <Box style={{display:"flex", alignItems:"center"}} >
           <Menu>
             <MenuButton p={1}>
 
-              {/* <NotificationBadge 
+              <NotificationBadge 
                 count={notification.length}
-                effect={Effect.SCALE}              /> */}
+                effect={Effect.SCALE}              />
 
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-              {/* <MenuList pl={2}>
+              <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -165,10 +169,10 @@ function SideDrawer() {
                 >
                    {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                    : `New Message from ${getSender(id, notif.chat.users)}`}
                 </MenuItem>
             ))} 
-            </MenuList> */}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
@@ -187,8 +191,7 @@ function SideDrawer() {
                   <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div>
-        </Flex>
+        </Box>
       </Box>
 
           <Drawer placement="left" onClose={onClose} isOpen={isOpen}>

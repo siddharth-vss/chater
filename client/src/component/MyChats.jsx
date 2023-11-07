@@ -1,9 +1,9 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Stack, Text } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import { 
   useEffect
-  , useState 
+  // , useState 
 } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
@@ -12,11 +12,11 @@ import { Button } from "@chakra-ui/react";
 import { useAppContext } from "../context/appContext";
 
 const MyChats = ({ fetchAgain }) => {
-  const [loggedUser, setLoggedUser] = useState();
+
   
 
 
-  const { selectedChat,sp,windowSize, setSelectedChat,  chats, setChats } = useAppContext();
+  const { selectedChat,sp,windowSize,id, setSelectedChat,  chats, setChats } = useAppContext();
 
   const toast = useToast();
   const width = windowSize.width;
@@ -40,10 +40,10 @@ const MyChats = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(localStorage.getItem("id"));
+   
     fetchChats();
     // eslint-disable-next-line
-  }, [fetchAgain]);
+  }, [fetchAgain,chats]);
 
   return (
     <Box
@@ -68,6 +68,7 @@ const MyChats = ({ fetchAgain }) => {
         fontFamily="Work sans"
         d="flex"
         w="100%"
+        
         justifyContent="space-between"
         alignItems="center"
       >
@@ -83,19 +84,22 @@ const MyChats = ({ fetchAgain }) => {
          </GroupChatModal>
       </Box>
       <Box
+      id="chats"
         d="flex"
         flexDir="column"
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="90%"
+        h="80vh"
         borderRadius="lg"
         overflowY="hidden"
       >
         {chats ? (
-          <Stack overflowY="scroll">
+          <Box style={{paddingTop: "90px"}} >
             {chats.map((chat) => (
               <Box
+              
+                id="chatbox"
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
@@ -107,7 +111,7 @@ const MyChats = ({ fetchAgain }) => {
               >
                 <Text>
                   {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
+                    ? getSender(id, chat.users)
                     : chat.chatName}
                 </Text>
                          {chat.latestMessage && (
@@ -121,7 +125,7 @@ const MyChats = ({ fetchAgain }) => {
                 )}
               </Box>
             ))}
-          </Stack>
+          </Box>
         ) : (
           <ChatLoading />
         )}

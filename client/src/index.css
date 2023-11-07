@@ -25,3 +25,20 @@ h1 {
 p{
   font-family: 'Agbalumo';
 }
+
+
+#chats{
+  width: 100%;
+  
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+#chatbox{
+  margin-top: 5px;
+}
+
+#chatfeed{
+  height: 72vh; 
+}

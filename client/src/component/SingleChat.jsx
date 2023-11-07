@@ -14,7 +14,7 @@ import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
-import {useAppContext } from "../context/appContext"
+import { useAppContext } from "../context/appContext"
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
@@ -35,20 +35,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat, sp,setSelectedChat, user,id, notification, setNotification } =
+  const { selectedChat,  sp, setSelectedChat, id, notification, setNotification } =
     useAppContext();
 
-   
+
   const fetchMessages = async () => {
     if (!selectedChat) return;
 
     try {
-     
+
       setLoading(true);
 
       const { data } = await sp.get(
         `/messages/${selectedChat._id}`,
-        );
+      );
       setMessages(data);
       setLoading(false);
 
@@ -69,7 +69,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     if (event.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
-        
+
         setNewMessage("");
         const { data } = await sp.post(
           "/messages",
@@ -77,7 +77,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             content: newMessage,
             chatId: selectedChat,
           },
-          
+
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
@@ -100,34 +100,39 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
-  
+
 
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     fetchMessages();
-    
+
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
-  }, [selectedChat,istyping]);
+  }, [selectedChat, istyping]);
+  
 
   useEffect(() => {
+    // console.log(notification)
     socket.on("message recieved", (newMessageRecieved) => {
+      console.log(newMessageRecieved)
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
+        console.log("spout",newMessageRecieved);
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
+          console.log("spin",newMessageRecieved);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        console.log("spel",newMessageRecieved);
       }
     });
   });
-
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
 
@@ -172,13 +177,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
-                 
-                  {getSender(user, selectedChat.users)}
-                  
+
+                  {getSender(id, selectedChat.users)}
+
                   <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)}
+                    user={getSenderFull(id, selectedChat.users)}
                   />
-                  
+
                 </>
               ) : (
                 <>
@@ -235,6 +240,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <></>
               )}
               <Input
+
                 variant="filled"
                 bg="#E0E0E0"
                 placeholder="Enter a message.."
@@ -247,9 +253,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       ) : (
         // to get socket.io on same page
         <Box d="flex" alignItems="center" justifyContent="center" h="100%">
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-            Click on a user to start chatting
-          </Text>
+          
+            <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+              Click on a user to start chatting
+            </Text>
         </Box>
       )}
     </>

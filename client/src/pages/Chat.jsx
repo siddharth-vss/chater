@@ -1,14 +1,14 @@
-import React from 'react'
-// import axios from 'axios'
+import React ,{ useState }from 'react'
+
 import {useAppContext} from '../context/appContext'
 import { Box } from '@chakra-ui/react';
 import SideDrawer from '../component/miscellaneous/SideDrawer';
 import MyChats from '../component/MyChats';
 import ChatBox from '../component/ChatBox';
-// import { Flex } from '@chakra-ui/react'
+
 
 const Chat = () => {
-  
+  const [fetchAgain, setFetchAgain] = useState(false);
  const {user } = useAppContext();
 
 
@@ -23,8 +23,8 @@ const Chat = () => {
          }}
          >
      
-        {user && <MyChats/>}
-        {user && <ChatBox/>}
+        {user && <MyChats  fetchAgain={fetchAgain} />}
+        {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
         {/* {user && "MYChats"} */}
         {/* {user && "ChatBox"} */}
       
