@@ -56,7 +56,7 @@ const AppProvider = ({ children }) => {
 
   const [selectedChat, setSelectedChat] = useState();
 
-  const [notification, setNotification] = useState([]);
+  // const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
   const [windowSize, setWindowSize] = useState({
@@ -217,8 +217,8 @@ const AppProvider = ({ children }) => {
         logoutUser,
         selectedChat,
         setSelectedChat,
-        notification,
-        setNotification,
+        // notification,
+        // setNotification,
         chats,
         setChats,
         sp,

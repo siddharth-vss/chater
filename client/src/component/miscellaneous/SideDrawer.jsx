@@ -18,7 +18,7 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -27,9 +27,9 @@ import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
-import NotificationBadge from "react-notification-badge";
-import { Effect } from "react-notification-badge";
-import { getSender } from "../../config/ChatLogics";
+// import NotificationBadge from "react-notification-badge";
+// import { Effect } from "react-notification-badge";
+// import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { useAppContext } from "../../context/appContext";
 
@@ -42,13 +42,12 @@ function SideDrawer() {
   const {
     setSelectedChat,
     // user,
-    id,
+    // id,
     name,
     windowSize,
     pic,
     email,
-    notification,
-    setNotification,
+    
     chats,
     sp,
     setChats,
@@ -148,14 +147,14 @@ function SideDrawer() {
         </Text>
         
         <Box style={{display:"flex", alignItems:"center"}} >
-          <Menu>
+          {/* <Menu>
             <MenuButton p={1}>
 
               <NotificationBadge 
                 count={notification.length}
-                effect={Effect.SCALE}              />
+                effect={Effect.SCALE}              /> 
 
-              <BellIcon fontSize="2xl" m={1} />
+               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
               <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -173,7 +172,7 @@ function SideDrawer() {
                 </MenuItem>
             ))} 
             </MenuList>
-          </Menu>
+          </Menu> */}
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
               <Avatar
