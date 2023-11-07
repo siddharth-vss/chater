@@ -41,19 +41,10 @@ app.use('/messages', messagesRouter);
 
 // const __dirname= path.resolve();
 
-if(process.env.NODE_ENV === "production"){
-   
-  app.use(express.static('client/build'));
-
-
-  app.get('/',(req,res)=>{
-      res.sendFile(path.join(__dirname,"index.html"));
-  })
-}else{
   app.get('/',(req,res)=>{
     res.send("API in running ");
   })
-}
+
 
 //|------------------------------------------------|
 const server = app.listen(PORT,()=>{
