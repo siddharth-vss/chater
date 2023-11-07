@@ -81,7 +81,7 @@ const AppProvider = ({ children }) => {
 
 
   const sp = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://localhost:10000',
     headers: {
       Authorization: `Bearer ${state.user}`,
     },
