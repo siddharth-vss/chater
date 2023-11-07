@@ -24,12 +24,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useToast } from "@chakra-ui/toast";
-import ChatLoading from "./ChatLoading";
+import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
-// import NotificationBadge from "react-notification-badge";
-// import { Effect } from "react-notification-badge";
-// import { getSender } from "../../config/ChatLogics";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { useAppContext } from "../../context/appContext";
 

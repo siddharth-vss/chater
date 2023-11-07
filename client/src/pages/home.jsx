@@ -1,7 +1,7 @@
 import React from 'react'
 import '../index.css'
-import Login from '../component/Login'
-import Register from '../component/Register'
+import Login from '../component/Authenication/Login'
+import Register from '../component/Authenication/Register'
 import { Navigate } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 

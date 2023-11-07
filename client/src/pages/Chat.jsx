@@ -3,8 +3,8 @@ import React from 'react'
 import {useAppContext} from '../context/appContext'
 import { Box } from '@chakra-ui/react';
 import SideDrawer from '../component/miscellaneous/SideDrawer';
-import MyChats from '../component/miscellaneous/MyChats';
-import ChatBox from '../component/miscellaneous/ChatBox';
+import MyChats from '../component/MyChats';
+import ChatBox from '../component/ChatBox';
 // import { Flex } from '@chakra-ui/react'
 
 const Chat = () => {

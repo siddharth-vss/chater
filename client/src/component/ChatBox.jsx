@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import "./styles.css";
 import SingleChat from "./SingleChat";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "../context/appContext";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat ,windowSize } = useAppContext();

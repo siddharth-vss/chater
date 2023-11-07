@@ -4,7 +4,7 @@ import { useToast } from '@chakra-ui/react'
 
 // import { useGoogleLogin } from '@react-oauth/google';
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../../context/appContext';
 
 
 

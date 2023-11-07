@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import  { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../../context/appContext';
 
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
 const Login = () => {

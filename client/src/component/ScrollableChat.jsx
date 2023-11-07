@@ -6,8 +6,8 @@ import {
   isSameSender,
   isSameSenderMargin,
   isSameUser,
-} from "../../config/ChatLogics";
-import { useAppContext} from "../../context/appContext";
+} from "../config/ChatLogics";
+import { useAppContext} from "../context/appContext";
 
 const ScrollableChat = ({ messages }) => {
   const {  id } = useAppContext();
