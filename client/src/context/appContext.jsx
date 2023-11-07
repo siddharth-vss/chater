@@ -162,7 +162,6 @@ const AppProvider = ({ children }) => {
 
       })
     } catch (error) {
-      console.log(error.response);
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { msg: error.response.data.message },
@@ -190,7 +189,6 @@ const AppProvider = ({ children }) => {
 
       })
     } catch (error) {
-      console.log(error.response);
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { msg: error.response.data.error },

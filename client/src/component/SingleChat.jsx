@@ -37,7 +37,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   const { selectedChat,  sp, setSelectedChat, id, notification, setNotification } =
     useAppContext();
-//  console.log(fetchAgain)
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -111,27 +110,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
   }, [selectedChat, istyping]);
-  // console.log("notification ----",notification);
 
   useEffect(() => {
-    // console.log(notification)
     socket.on("message recieved", (newMessageRecieved) => {
-    //   console.log(selectedChatCompare)
       if (
         selectedChatCompare === undefined ||
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-    //     console.log("spout",newMessageRecieved);
         if (notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
-          // console.log(fetchAgain);
-          console.log("spin",newMessageRecieved);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
-        console.log("spel", messages);
       }
     });
   });

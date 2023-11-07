@@ -14,10 +14,9 @@ const accessChat = async (req, res) => {
 
 
     const { userId } = req.body;
-    console.log(userId , req.body);
-    if (!userId) {
-        console.log("UserId param not sent with request");
-        return res.sendStatus(400);
+   if (!userId) {
+      
+        return res.sendStatus(400).json("enter correct userName");
     }
 
     let isChat = await CHAT.find({

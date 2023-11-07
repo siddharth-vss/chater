@@ -22,7 +22,6 @@ const register = async (req, res) => {
     let ext = ind[npr];
 
     let { name, email, password, pic, mobile } = req.body;
-console.log(req.body);
     let user = await USERS.findOne({ email });
     let hash = await bcrypt.hash(password, salt);
     try {
@@ -51,8 +50,7 @@ console.log(req.body);
               });
         }
     } catch (err) {
-        console.log("error =>", err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send(err);
     }
 
 }
@@ -62,7 +60,7 @@ const login = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-  console.log(req.body)
+
     const { email, password } = req.body;
 
 
@@ -100,8 +98,7 @@ const login = async (req, res) => {
 
 
     } catch (error) {
-        console.error(error.message);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send(error);
     }
 
 
@@ -121,11 +118,9 @@ const allUsers = async (req, res) => {
         { email: {$regex: req.query.search, $options:"i" } },
     ]
   }:{};
-  console.log(req.user)
+
   let users = await USERS.find(keyword).find({_id:{$ne:req.user}});
     res.send(users);
-    console.log(users);
-
-}
+    }
 
 module.exports = { register, login, update, get , allUsers};
