@@ -14,7 +14,7 @@ const chatsRouter = require('./routes/chats');
 const messagesRouter = require('./routes/messages');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 // view engine setup
 
 
