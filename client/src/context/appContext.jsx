@@ -81,7 +81,7 @@ const AppProvider = ({ children }) => {
 
 
   const sp = axios.create({
-    baseURL: 'http://localhost:10000',
+    baseURL: 'https://talk-a-live-spz.onrender.com',
     headers: {
       Authorization: `Bearer ${state.user}`,
     },
